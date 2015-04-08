@@ -130,8 +130,6 @@
     <orderEntry type="library" name="SBT: org.springframework:spring-core:4.0.3.RELEASE:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.w3c.css:sac:1.3:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: org.webbitserver:webbit:0.4.14:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.webjars:bootstrap:3.3.1:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.webjars:jquery:2.1.1:jar" level="project" />
     <orderEntry type="library" name="SBT: org.yaml:snakeyaml:1.13:jar" level="project" />
     <orderEntry type="library" name="SBT: tyrex:tyrex:1.0.1:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="SBT: xalan:serializer:2.7.1:jar" level="project" />
