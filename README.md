@@ -9,7 +9,7 @@ Here are the steps required to run this application:
 
 #### 1. Install PostgreSQL.
 
-Download and install a local copy of [PostgreSQL](http://www.postgresql.org/).  Play-example-postgresql was tested with Version 9.3 (since that is the current default version used by Heroku).  Later versions may still work.
+Download and install a local copy of [PostgreSQL](http://www.postgresql.org/).  Play-example-postgresql was tested with PostgreSQL 9.3 (since that is the current version used by Heroku by default).  Later versions of PostgreSQL may still work.
 
 To test that your PostgreSQL installation was successful, you should be able to run psql from the command line and list the currently installed databases as follows:
 
