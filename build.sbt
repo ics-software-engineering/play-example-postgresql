@@ -1,4 +1,4 @@
-name := """play-example-postgres"""
+name := """play-example-postgresql"""
 
 version := "0.0.1-SNAPSHOT"
 
