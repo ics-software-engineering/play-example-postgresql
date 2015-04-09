@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Play-example-postgresql : Sample system illustrating Play, PostgreSQL, EBean, and Heroku">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Play-example-postgresql</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/ics-software-engineering/play-example-postgresql">View on GitHub</a>
+
+          <h1 id="project_title">Play-example-postgresql</h1>
+          <h2 id="project_tagline">Sample system illustrating Play, PostgreSQL, EBean, and Heroku</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/ics-software-engineering/play-example-postgresql/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/ics-software-engineering/play-example-postgresql/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="play-example-postgresql" class="anchor" href="#play-example-postgresql" aria-hidden="true"><span class="octicon octicon-link"></span></a>play-example-postgresql</h1>
+
+<p>This application illustrates how to configure Play to access a PostgreSQL database, as well as how to deploy it to Heroku.  The functionality is simple: the application creates a PostgreSQL table called <code>page_retrieval</code> containing two columns: an Id and a timestamp.  A new row is added to the database each time the home page of the application is retrieved.   Thus, the size of the table indicates the number of times the home page has been retrieved, and that value is printed to the home page each time it is accessed:</p>
+
+<p><img src="https://raw.githubusercontent.com/ics-software-engineering/play-example-postgresql/master/doc/play-example-postgresql-home-page.png" alt="screenshot"></p>
+
+<p>Here are the steps required to run this application:</p>
+
+<h4>
+<a id="1-install-postgresql" class="anchor" href="#1-install-postgresql" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Install PostgreSQL.</h4>
+
+<p>Download and install a local copy of <a href="http://www.postgresql.org/">PostgreSQL</a>.  Play-example-postgresql was tested with PostgreSQL 9.3 (since that is the current version used by Heroku by default).  Later versions of PostgreSQL may still work.</p>
+
+<p>To test that your PostgreSQL installation was successful, you should be able to run psql from the command line and list the currently installed databases as follows:</p>
+
+<div class="highlight highlight-Shell"><pre>[~/]-<span class="pl-k">&gt;</span> psql
+psql (9.3.5)
+Type <span class="pl-s"><span class="pl-pds">"</span>help<span class="pl-pds">"</span></span> <span class="pl-k">for</span> <span class="pl-smi">help</span>.
+
+johnson=# <span class="pl-cce">\l</span>
+                                       List of databases
+          Name           <span class="pl-k">|</span>  Owner  <span class="pl-k">|</span> Encoding <span class="pl-k">|</span>   Collate   <span class="pl-k">|</span>    Ctype    <span class="pl-k">|</span>  Access privileges  
+-------------------------+---------+----------+-------------+-------------+---------------------
+ johnson                 <span class="pl-k">|</span> johnson <span class="pl-k">|</span> UTF8     <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> 
+ postgres                <span class="pl-k">|</span> johnson <span class="pl-k">|</span> UTF8     <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> 
+ template0               <span class="pl-k">|</span> johnson <span class="pl-k">|</span> UTF8     <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> =c/johnson         +
+                         <span class="pl-k">|</span>         <span class="pl-k">|</span>          <span class="pl-k">|</span>             <span class="pl-k">|</span>             <span class="pl-k">|</span> johnson=CTc/johnson
+ template1               <span class="pl-k">|</span> johnson <span class="pl-k">|</span> UTF8     <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> =c/johnson         +
+                         <span class="pl-k">|</span>         <span class="pl-k">|</span>          <span class="pl-k">|</span>             <span class="pl-k">|</span>             <span class="pl-k">|</span> johnson=CTc/johnson
+(4 rows)
+
+johnson=# <span class="pl-cce">\q</span>
+[~/]-<span class="pl-k">&gt;</span> </pre></div>
+
+<h4>
+<a id="2-create-a-database-called-play_example_postgresql" class="anchor" href="#2-create-a-database-called-play_example_postgresql" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Create a database called play_example_postgresql</h4>
+
+<p>This application makes a JDBC connection to a local database called play_example_postgresql, as shown <a href="https://github.com/ics-software-engineering/play-example-postgres/blob/master/conf/application.conf#L42">here</a>.</p>
+
+<p>So, you need to create this database in your local PostgreSQL server.  A simple approach is to use psql: </p>
+
+<div class="highlight highlight-Shell"><pre>[~/]-<span class="pl-k">&gt;</span> psql
+psql (9.3.5)
+Type <span class="pl-s"><span class="pl-pds">"</span>help<span class="pl-pds">"</span></span> <span class="pl-k">for</span> <span class="pl-smi">help</span>.
+
+johnson=# create database play_example_postgresql <span class="pl-k">;</span>
+CREATE DATABASE
+johnson=# <span class="pl-cce">\l</span>
+                                       List of databases
+          Name           <span class="pl-k">|</span>  Owner  <span class="pl-k">|</span> Encoding <span class="pl-k">|</span>   Collate   <span class="pl-k">|</span>    Ctype    <span class="pl-k">|</span>  Access privileges  
+-------------------------+---------+----------+-------------+-------------+---------------------
+ johnson                 <span class="pl-k">|</span> johnson <span class="pl-k">|</span> UTF8     <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> 
+ play_example_postgresql <span class="pl-k">|</span> johnson <span class="pl-k">|</span> UTF8     <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> 
+ postgres                <span class="pl-k">|</span> johnson <span class="pl-k">|</span> UTF8     <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> 
+ template0               <span class="pl-k">|</span> johnson <span class="pl-k">|</span> UTF8     <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> =c/johnson         +
+                         <span class="pl-k">|</span>         <span class="pl-k">|</span>          <span class="pl-k">|</span>             <span class="pl-k">|</span>             <span class="pl-k">|</span> johnson=CTc/johnson
+ template1               <span class="pl-k">|</span> johnson <span class="pl-k">|</span> UTF8     <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> en_US.UTF-8 <span class="pl-k">|</span> =c/johnson         +
+                         <span class="pl-k">|</span>         <span class="pl-k">|</span>          <span class="pl-k">|</span>             <span class="pl-k">|</span>             <span class="pl-k">|</span> johnson=CTc/johnson
+(6 rows)
+johnson=# <span class="pl-cce">\q</span>
+[~/]-<span class="pl-k">&gt;</span> </pre></div>
+
+<h4>
+<a id="3-run-the-application" class="anchor" href="#3-run-the-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Run the application</h4>
+
+<p>Now run the Play application using Activator:</p>
+
+<div class="highlight highlight-Shell"><pre><span class="pl-k">~</span>/projecthosting/github/play/play-example-postgresql]-<span class="pl-k">&gt;</span> activator run
+[info] Loading project definition from /Users/johnson/projecthosting/github/play/play-example-postgresql/project
+[info] Updating {file:/Users/johnson/projecthosting/github/play/play-example-postgresql/project/}play-example-postgresql-build...
+[info] Resolving org.fusesource.jansi#jansi<span class="pl-k">;</span>1.4 ...
+[info] Done updating.
+[info] Set current project to play-example-postgresql (<span class="pl-k">in</span> build file:/Users/johnson/projecthosting/github/play/play-example-postgresql/)
+[info] Updating {file:/Users/johnson/projecthosting/github/play/play-example-postgresql/}root...
+[info] Resolving jline#jline<span class="pl-k">;</span>2.12 ...
+[info] Done updating.
+
+--- (Running the application, auto-reloading is enabled) ---
+
+[info] play - Listening <span class="pl-k">for</span> <span class="pl-smi">HTTP</span> on /0:0:0:0:0:0:0:0:9000
+
+(Server started, use Ctrl+D to stop and go back to the console...)</pre></div>
+
+<p>The application should now be accessible at <a href="http://localhost:9000">http://localhost:9000</a>. </p>
+
+<p>Once you try to retrieve it in a browser, you should see the following additional lines printed out in the console:</p>
+
+<div class="highlight highlight-Shell"><pre>[info] Compiling 2 Scala sources to /Users/johnson/projecthosting/github/play/play-example-postgres/target/scala-2.11/classes...
+[info] play - database [default] connected at jdbc:postgresql://localhost/play_example_postgresql
+[info] play - Application started (Dev)</pre></div>
+
+<h4>
+<a id="4-deploy-to-heroku" class="anchor" href="#4-deploy-to-heroku" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Deploy to Heroku</h4>
+
+<p>It is quite easy to deploy this application to Heroku.  First, you must <a href="https://signup.heroku.com/www-header">sign up for a Heroku account</a> and install the <a href="https://toolbelt.heroku.com/">Heroku toolbelt</a>.</p>
+
+<p>Second, make sure this application is in the master branch of a local git repository.  If the source code is not already under git control, you can set it up quickly with the following commands in the directory containing the application:</p>
+
+<div class="highlight highlight-Shell"><pre>$ git init
+$ git add <span class="pl-c1">.</span>
+$ git commit -m <span class="pl-s"><span class="pl-pds">"</span>init<span class="pl-pds">"</span></span></pre></div>
+
+<p>Third, create a new application on Heroku using <code>heroku create</code>:</p>
+
+<div class="highlight highlight-Shell"><pre> $ heroku create
+ Creating warm-frost-1289... <span class="pl-k">done</span>, stack is cedar-14
+ http://warm-frost-1289.herokuapp.com/ <span class="pl-k">|</span> git@heroku.com:warm-frost-1289.git
+ Git remote heroku added</pre></div>
+
+<p>Finally, deploy the application using <code>git push heroku master</code>:</p>
+
+<div class="highlight highlight-Shell"><pre> $ git push heroku master
+ Counting objects: 93, <span class="pl-k">done</span>.
+ Delta compression using up to 4 threads.
+ Compressing objects: 100% (84/84), <span class="pl-k">done</span>.
+ Writing objects: 100% (93/93), 1017.92 KiB <span class="pl-k">|</span> 0 bytes/s, <span class="pl-k">done</span>.
+ Total 93 (delta 38), reused 0 (delta 0)
+ remote: Compressing <span class="pl-c1">source</span> files... <span class="pl-k">done</span>.
+ remote: Building <span class="pl-c1">source</span>:
+ remote:
+ remote: -----<span class="pl-k">&gt;</span> Play 2.x - Scala app detected
+ remote: -----<span class="pl-k">&gt;</span> Installing OpenJDK 1.8... <span class="pl-k">done</span>
+ remote: -----<span class="pl-k">&gt;</span> Downloading SBT... <span class="pl-k">done</span>
+ remote: -----<span class="pl-k">&gt;</span> Priming Ivy cache (Scala-2.11, Play-2.3)... <span class="pl-k">done</span>
+ remote: -----<span class="pl-k">&gt;</span> Running: sbt update
+ ...
+ remote: -----<span class="pl-k">&gt;</span> Dropping ivy cache from the slug
+ remote: -----<span class="pl-k">&gt;</span> Dropping sbt boot dir from the slug
+ remote: -----<span class="pl-k">&gt;</span> Dropping compilation artifacts from the slug
+ remote: -----<span class="pl-k">&gt;</span> Discovering process types
+ remote:        Procfile declares types -<span class="pl-k">&gt;</span> web
+ remote:
+ remote: -----<span class="pl-k">&gt;</span> Compressing... <span class="pl-k">done</span>, 93.3MB
+ remote: -----<span class="pl-k">&gt;</span> Launching... <span class="pl-k">done</span>, v6
+ remote:        https://warm-frost-1289.herokuapp.com/ deployed to Heroku
+ remote:
+ remote: Verifying deploy... <span class="pl-k">done</span>.
+ To https://git.heroku.com/warm-frost-1289.git
+ <span class="pl-k">*</span> [new branch]      master -<span class="pl-k">&gt;</span> master</pre></div>
+
+<p>More information is available in the <a href="https://www.playframework.com/documentation/2.3.x/ProductionHeroku">Deploying to Heroku</a> page of the Play Framework documentation. </p>
+
+<h2>
+<a id="screencast" class="anchor" href="#screencast" aria-hidden="true"><span class="octicon octicon-link"></span></a>Screencast</h2>
+
+<p>Click the image below to watch a six minute walkthrough of the code:</p>
+
+<p><a href="http://youtu.be/RqmIgP5mocs"><img width="600px" src="https://raw.githubusercontent.com/ics-software-engineering/play-example-postgresql/master/doc/play-example-postgresql-screencast.png"></a></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Play-example-postgresql maintained by <a href="https://github.com/ics-software-engineering">ics-software-engineering</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
