@@ -2,7 +2,7 @@
 
 This application illustrates how to configure Play to access a PostgreSQL database, as well as how to deploy it to Heroku.  The functionality is simple: the application creates a PostgreSQL table called `page_retrieval` containing two columns: an Id and a timestamp.  A new row is added to the database each time the home page of the application is retrieved.   Thus, the size of the table indicates the number of times the home page has been retrieved, and that value is printed to the home page each time it is accessed:
 
-![screenshot](https://raw.githubusercontent.com/ics-software-engineering/play-example-postgres/master/doc/play-example-postgres-home-page.png)
+![screenshot](https://raw.githubusercontent.com/ics-software-engineering/play-example-postgresql/master/doc/play-example-postgresql-home-page.png)
 
 Here are the steps required to run this application:
 
@@ -151,4 +151,4 @@ More information is available in the [Deploying to Heroku](https://www.playframe
 
 Click the image below to watch a six minute walkthrough of the code:
 
-<a href="http://youtube.com/"><img width="600px" src="https://raw.githubusercontent.com/ics-software-engineering/play-example-postgres/master/doc/play-example-postgres-home-page.png"></a>
+<a href="http://youtu.be/RqmIgP5mocs"><img width="600px" src="https://raw.githubusercontent.com/ics-software-engineering/play-example-postgresql/master/doc/play-example-postgresql-screencast.png"></a>
