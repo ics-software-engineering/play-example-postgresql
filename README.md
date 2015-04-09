@@ -157,4 +157,4 @@ Fifth, verify your deployment by retrieving the Heroku application in your brows
 
 Click the image below to watch a six minute walkthrough of the code:
 
-<a href="http://youtu.be/RqmIgP5mocs"><img width="600px" src="https://raw.githubusercontent.com/ics-software-engineering/play-example-postgresql/master/doc/play-example-postgresql-screencast.png"></a>
+<a href="http://youtu.be/lt-l7M1N3_c"><img width="600px" src="https://raw.githubusercontent.com/ics-software-engineering/play-example-postgresql/master/doc/play-example-postgresql-screencast.png"></a>
