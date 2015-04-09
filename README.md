@@ -146,3 +146,9 @@ Third, create a new application on Heroku using `heroku create`:
  * [new branch]      master -> master
  ```
 More information is available in the [Deploying to Heroku](https://www.playframework.com/documentation/2.3.x/ProductionHeroku) page of the Play Framework documentation. 
+
+## Screencast
+
+Click the image below to watch a six minute walkthrough of the code:
+
+<a href="http://youtube.com/"><img width="600px" src="https://raw.githubusercontent.com/ics-software-engineering/play-example-postgres/master/doc/play-example-postgres-home-page.png"></a>
