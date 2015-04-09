@@ -92,7 +92,11 @@ Once you try to retrieve it in a browser, you should see the following additiona
 [info] play - Application started (Dev)
 ```
 
-#### 4. Deploy to Heroku
+#### 4. Verify your installation
+
+Test that you have run the application successfully by retrieving the application in your browser and then refreshing the page.  You should see the counter increment in value. 
+
+#### 5. Deploy to Heroku
 
 It is quite easy to deploy this application to Heroku.  First, you must [sign up for a Heroku account](https://signup.heroku.com/www-header) and install the [Heroku toolbelt](https://toolbelt.heroku.com/).
 
@@ -113,7 +117,7 @@ Third, create a new application on Heroku using `heroku create`:
  Git remote heroku added
  ```
  
- Finally, deploy the application using `git push heroku master`:
+ Fourth, deploy the application using `git push heroku master`:
  
  ```Shell
  $ git push heroku master
@@ -146,6 +150,8 @@ Third, create a new application on Heroku using `heroku create`:
  * [new branch]      master -> master
  ```
 More information is available in the [Deploying to Heroku](https://www.playframework.com/documentation/2.3.x/ProductionHeroku) page of the Play Framework documentation. 
+
+Fifth, verify your deployment by retrieving the Heroku application in your browser.  If the deployment was successful, you should be able to refresh the page and see the counter increment in value. 
 
 ## Screencast
 
