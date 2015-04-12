@@ -13,7 +13,8 @@ public class ModelTest {
 
   /**
    * Create and save an instance and see if it can be retrieved.
-   * NOTE: currently fails when run in IntelliJ with a PersistenceException. Runs fine with 'activator test'.
+   * NOTE: Running this test within IntelliJ 14.1 fails with a PersistenceException.
+   * Use 'activator test' for correct operation.
    */   
     @Test
     public void test() {
