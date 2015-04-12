@@ -16,7 +16,11 @@ create sequence page_retrieval_seq;
 
 # --- !Downs
 
-drop table if exists page_retrieval cascade;
+SET REFERENTIAL_INTEGRITY FALSE;
+
+drop table if exists page_retrieval;
+
+SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists page_retrieval_seq;
 
